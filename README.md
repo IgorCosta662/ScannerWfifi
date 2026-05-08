@@ -66,5 +66,5 @@ No Windows, para melhor funcionamento, recomenda‑se instalar o Npcap com supor
 
 🚀 Instalação
 # Clone o repositório
-git clone https://github.com/kalyel473/wifi.git
-cd waircut
+git clone https://github.com/Kalyel473/ScannerWfifi.git
+cd ScannerWfifi
