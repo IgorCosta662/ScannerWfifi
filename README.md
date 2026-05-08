@@ -1,4 +1,4 @@
-# 🔐 Waircut – Ferramenta de Auditoria de Protocolo Wireless WPS
+# 🔐 WifiScanner – Ferramenta de Auditoria de Protocolo Wireless WPS
 
 **Waircut** é uma ferramenta de código aberto escrita em Python para auditoria de segurança de redes Wi-Fi, com foco na exploração de vulnerabilidades do protocolo **WPS (Wi‑Fi Protected Setup)** e análise de tráfego de rede.
 
