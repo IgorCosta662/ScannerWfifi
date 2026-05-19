@@ -85,5 +85,5 @@ No **Windows**, para melhor funcionamento, recomenda‑se instalar o **Npcap** c
 
 ```bash
 # Clone o repositório
-git clone https://github.com/kalyel473/wifi.git
+git clone https://github.com/IgorCosta662/ScannerWfifi
 cd WifiScanner
