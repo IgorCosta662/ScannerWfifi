@@ -6,6 +6,7 @@ Versão Python: 1.0
 """
 
 import sys
+import os
 import time
 import socket
 import struct
@@ -15,6 +16,12 @@ from datetime import datetime
 from scapy.all import *
 from scapy.layers.dot11 import *
 from scapy.layers.eap import *
+
+# Ativa suporte a cores ANSI no terminal do Windows
+if os.name == 'nt':
+    import ctypes
+    kernel32 = ctypes.windll.kernel32
+    kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
 # Configuração de cores para terminal
 class Colors:
@@ -912,7 +919,7 @@ class Waircut:
                 common_passwords.extend([
                     ap.ssid.lower(),
                     ap.ssid.lower() + "123",
-                    ap.ssid.lower() + "2024",
+                    ap.ssid.lower() + str(datetime.now().year),
                     ap.ssid.lower() + "@123",
                 ])
             
@@ -2046,8 +2053,14 @@ class Waircut:
                         if_list.append(iface)
             
             if not if_list:
-                print(f"{Colors.RED}[-] Nenhuma interface wireless encontrada.{Colors.RESET}")
-                return None
+                print(f"{Colors.YELLOW}[!] Nenhuma interface Wi-Fi/Ethernet encontrada pelo filtro. Listando todas...{Colors.RESET}")
+                if os.name == 'nt':
+                    from scapy.arch.windows import get_windows_if_list
+                    all_ifaces = get_windows_if_list()
+                    if_list = [i['name'] for i in all_ifaces]
+                if not if_list:
+                    print(f"{Colors.RED}[-] Nenhuma interface encontrada.{Colors.RESET}")
+                    return None
             
             print(f"\n{Colors.YELLOW}Interfaces disponíveis:{Colors.RESET}")
             for i, iface in enumerate(if_list):
@@ -2317,12 +2330,22 @@ def main():
             return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
     if not is_admin():
-        print(f"{Colors.RED}[-] Esta ferramenta requer privilégios de administrador/root.{Colors.RESET}")
         if os.name == 'nt':
-             print(f"{Colors.YELLOW}[*] Execute o prompt de comando ou terminal como Administrador.{Colors.RESET}")
+            print(f"{Colors.YELLOW}[*] Solicitando privilégios de administrador via UAC...{Colors.RESET}")
+            import ctypes
+            ret = ctypes.windll.shell32.ShellExecuteW(
+                None, "runas", sys.executable,
+                ' '.join(f'"{a}"' for a in sys.argv),
+                None, 1
+            )
+            if ret <= 32:
+                print(f"{Colors.RED}[-] Falha ao elevar privilégios (código {ret}).{Colors.RESET}")
+                print(f"{Colors.YELLOW}[*] Execute o prompt de comando como Administrador manualmente.{Colors.RESET}")
+            sys.exit(0)
         else:
-             print(f"{Colors.YELLOW}[*] Execute com: sudo python waircut.py{Colors.RESET}")
-        sys.exit(1)
+            print(f"{Colors.RED}[-] Esta ferramenta requer privilégios de root.{Colors.RESET}")
+            print(f"{Colors.YELLOW}[*] Execute com: sudo python waircut.py{Colors.RESET}")
+            sys.exit(1)
     
     show_banner()
     
