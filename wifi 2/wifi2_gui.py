@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Waircut GUI - Interface Gráfica para a ferramenta de Auditoria Wi-Fi
+Quantum GUI - Interface Gráfica para a ferramenta de Auditoria Wi-Fi
 """
 
 import sys
@@ -55,7 +55,7 @@ class WaircutGUI:
         ctk.set_default_color_theme("blue")
 
         self.root = ctk.CTk()
-        self.root.title("Waircut - Wi-Fi Auditing Tool")
+        self.root.title("Quantum - Wi-Fi Auditing Tool")
         self.root.geometry("1280x780")
         self.root.minsize(960, 620)
 
@@ -103,7 +103,7 @@ class WaircutGUI:
 
         ctk.CTkLabel(
             title_bar,
-            text="⚡  WAIRCUT — Wi-Fi Auditing Tool",
+            text="⚡  QUANTUM — Wi-Fi Auditing Tool",
             font=ctk.CTkFont(family="Courier New", size=18, weight="bold"),
             text_color="#00d4ff"
         ).pack(side="left", padx=20, pady=10)
@@ -277,7 +277,7 @@ class WaircutGUI:
     def _print_welcome(self):
         msg = [
             ("=" * 62 + "\n", "cyan"),
-            ("  WAIRCUT — Wi-Fi Auditing Tool  |  Interface Gráfica\n", "cyan"),
+            ("  QUANTUM — Wi-Fi Auditing Tool  |  Interface Gráfica\n", "cyan"),
             ("=" * 62 + "\n\n", "cyan"),
             ("[*] Selecione uma interface de rede para começar.\n", "yellow"),
             ("[!] Use apenas em redes que você tem autorização.\n\n", "red"),
